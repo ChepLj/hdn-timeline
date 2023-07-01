@@ -1,0 +1,300 @@
+.mainContainer {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
+  background-color: whitesmoke;
+}
+
+.header {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(159, 193, 223);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  box-sizing: border-box;
+  
+}
+.headerBackButton {
+  color: rgb(202, 89, 24);
+  cursor: pointer;
+  font-weight: 500;
+}
+.headerUploadButton {
+  border: 0.5px solid rgba(225, 245, 44, 0.774);
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: rgba(232, 245, 44, 0.774);
+  color: rgb(22, 202, 31);
+  box-shadow: 1px 1px 5px rgb(109, 128, 0);
+  user-select: none;
+  cursor: pointer;
+}
+.headerUploadButton:active {
+  opacity: 0.5;
+}
+.contentContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  position: relative;
+}
+
+.leftSideContainer {
+  width: 25%;
+  box-sizing: border-box;
+  height: 100%;
+  border-right: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px;
+  overflow-y: auto;
+  
+}
+.lsItem {
+  /* border-bottom: 1px solid gray; */
+  width: 100%;
+  text-align: start;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lsItemLabel {
+  padding-right: 10px;
+  font-weight: 500;
+  font-size: 18px;
+}
+.lsItemSelect {
+  min-width: 60px;
+  min-height: 25px;
+  font-size: 16px;
+  text-align: center;
+  color: rgb(46, 93, 211);
+  font-weight: 500;
+}
+.lsItemStatus {
+  width: 100%;
+  height: 100%;
+}
+
+.lsItemStatusTextArea {
+  width: 100%;
+  height: 90%;
+  resize: none;
+  padding: 5px;
+}
+.lsChooseImageButton {
+  border: 0.5px solid rgba(77, 245, 44, 0.774);
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: rgba(77, 245, 44, 0.774);
+  color: rgb(202, 22, 22);
+  box-shadow: 1px 1px 5px green;
+  user-select: none;
+  cursor: pointer;
+}
+.lsChooseImageButton:active {
+  opacity: 0.5;
+}
+.rightSideContainer {
+
+  width: 75%;
+  box-sizing: border-box;
+  height: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding: 20px;
+  overflow-y: auto;
+  
+  
+}
+.rsImageItem {
+  border: 1px solid gray;
+  width: 12%;
+  aspect-ratio: 1/1;
+  margin: 5px;
+  box-shadow: 1px 1px 5px rgb(179, 178, 178);
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rsImageItem:hover {
+  box-shadow: 1px 1px 5px rgb(94, 93, 93);
+}
+.rsImageItemLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 10px;
+}
+.rsImageItemDeleteIcon {
+  position: absolute;
+  top: -2px;
+  right: 2px;
+  font-size: 20px;
+  color: rgb(133, 12, 12);
+  line-height: 20px;
+}
+.rsImageItemDeleteIcon:hover {
+  color: red;
+  font-size: 28px;
+}
+.rsModalImageBox{
+  top:0;
+  left:0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0, 0, 0.7);
+  position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: start;
+  
+}
+.rsModalImageView{
+  width: 60vw;
+  aspect-ratio: 16/9;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 2px solid gray;
+  box-shadow: 1px 1px 10px rgb(49, 48, 48);
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.progressUploadContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.proUpBox {
+  height: 80vh;
+  background-color: whitesmoke;
+  width: 500px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  position: relative;
+  
+}
+.proUpBoxHeader {
+  width: 100%;
+  height: 40px;
+  background-color: coral;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.proUpBoxList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding-left: 20px;
+  width: 100%;
+  height: 80%;
+}
+.proUpBoxItem {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  padding: 5px 10px 5px 5px ;
+
+  text-align: start;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.proUpDoneBox {
+  position: absolute;
+  top: 40%;
+  right: 10%;
+  width: 80%;
+  height: 120px;
+  background-color: wheat;
+  box-shadow: 2px 2px 10px rgba(74, 82, 9, 0.774);
+  padding: 10px;
+  box-sizing: border-box;
+  
+}
+.proUpDoneButton {
+  border: 0.5px solid rgba(64, 44, 245, 0.774);
+  padding: 3px 30px;
+  border-radius: 15px;
+  background-color: rgba(21, 121, 235, 0.774);
+  color: rgb(212, 218, 212);
+  box-shadow: 1px 1px 5px rgb(23, 38, 59);
+  user-select: none;
+  cursor: pointer;
+  margin: 40px;
+}
+.proUpDoneButton:active {
+  opacity: 0.6;
+}
+
+@media only screen and (max-width: 600px) {
+  .contentContainer {
+    flex-direction: column;
+  }
+  .leftSideContainer{
+    width: 100%;
+    height: 35%;
+  }
+  .rightSideContainer{
+    width: 100%;
+    padding-top: 10px;
+  }
+  .rsImageItem{
+    width: 20%;
+  }
+  .rsImageItemDeleteIcon{
+    display: none;
+  }
+  .rsModalImageBox{
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0, 0, 0.7);
+    position: absolute;
+    display:flex;
+    justify-content: center;
+    align-items: start;
+    
+  }
+  .rsModalImageView{
+    width: 100vw;
+    height: 80vh;
+    /* aspect-ratio: 16/9; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 2px solid gray;
+    box-shadow: 1px 1px 10px rgb(49, 48, 48);
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+}

@@ -1,0 +1,291 @@
+.mainImage {
+   /* The image used */
+   background-image: url('../../media/image/background.jpg');
+
+   /* Full height */
+   height: 50%;
+
+   /* Center and scale the image nicely */
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   /* margin-bottom: 15px; */
+   position: relative;
+}
+.mainBanner{
+     width: 100%;
+     margin-bottom: 15px;
+}
+.mainBannerImage{
+  width: 100%;
+}
+.mainButtonCreateNew{
+  position: absolute;
+  top:10px;
+  right: 20px;
+  border: 1px solid rgb(16, 146, 16);
+  padding: 5px 15px;
+  border-radius: 5px;
+  color:white;
+  background-color: rgb(136, 202, 36);
+  box-shadow: 1px 1px 5px green;
+  cursor: pointer;
+  user-select: none;
+}
+.mainButtonCreateNew:active{
+ opacity: 0.5;
+}
+.mainContainer {
+   width: 100%;
+   height: 100%;
+   overflow-x: hidden;
+   background-color: #f4f8f7;
+
+
+}
+
+.postElementContainer {
+   display: flex;
+   width: 100%;
+   height: fit-content;
+   flex-direction: row;
+   margin: 20px 20px 40px 20px;
+}
+
+.leftSideContainer {
+   display: flex;
+   width: 67%;
+   height: 100%;
+   flex-direction: column;
+   align-items: start;
+   justify-content: start;
+   padding-left: 10px;
+   border-left: 1.5px dashed gray;
+
+   /* background-color: rgb(17, 105, 29); */
+}
+.lsHeader {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
+   padding-right: 20px;
+   box-sizing: border-box;
+   
+}
+.lsHeaderTitle {
+  display: flex;
+
+  align-items: center;
+  color: rgb(38, 197, 38);
+  font-style: italic;
+  font-size: 14px;
+  font-family: 'Shantell Sans', cursive;
+}
+.lsHeaderButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 25px;
+  
+}
+.lsHeaderButtonDelete {
+  padding: 2px 10px;
+  cursor: pointer;
+  user-select: none;
+  color: red;
+}
+.lsHeaderButtonEdit {
+  padding: 2px 10px;
+  cursor: pointer;
+  user-select: none;
+  color: #dfdc31;
+}
+.lsHeaderButtonDelete:hover {
+  font-size: 16px;
+}
+.lsHeaderButtonEdit:hover {
+  font-size: 18px;
+}
+
+.rsComment {
+   padding: 10px;
+   /* margin: 10px; */
+   font-size: 12px;
+   font-family: 'Montserrat', sans-serif;
+   color: #d82dd8;
+   font-weight: 600;
+}
+
+.lsMainImageContainer {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.lsMainImageBox {
+   width: 70%;
+   aspect-ratio: 16 / 9;
+   border: 1px solid gray;
+   margin: 10px;
+   box-shadow: 1px 1px 5px gray;
+   box-sizing: border-box;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: contain;
+   border-radius: 5px;
+}
+
+.lsMainImageBackForward {
+   width: 50px;
+   height: 100px;
+   cursor: pointer;
+   text-align: center;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: gray;
+}
+
+.lsImageList {
+   --height: 100px;
+   width: 96%;
+   height: 130px;
+   box-sizing: border-box;
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   overflow-x: scroll;
+   overflow-y: hidden;
+   margin: 10px;
+   padding-right: 20px;
+}
+.lsImageListItem {
+   height: var(--height);
+   width: var(--height);
+   border: 1px solid #ccc;
+   margin: 4px;
+   box-sizing: border-box;
+   position: relative;
+   box-shadow: 1px 1px 5px rgb(190, 189, 189);
+   aspect-ratio: 1 / 1;
+   cursor: pointer;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   border-radius: 5px;
+}
+.lsImageListItem:hover {
+   box-shadow: -1px 1px 15px rgb(15, 15, 14);
+}
+
+.lsListImageBackForward {
+   width: 50px;
+   height: 100px;
+   cursor: pointer;
+   text-align: center;
+   /* background-color: aqua; */
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: gray;
+   user-select: none;
+}
+
+.border {
+   height: auto;
+   width: 1;
+   border-left: 1px solid gray;
+}
+@media only screen and (max-width: 600px) {
+   .rightSideContainer {
+      display: none;
+   }
+   .leftSideContainer {
+      width: 98%;
+      padding-left: 0px;
+      border-left: 1.5px dashed gray;
+   }
+   .postElementContainer {
+      margin: 0 0 15px 0;
+   }
+   .border {
+      display: none;
+   }
+
+   /* Hide scrollbar for Chrome, Safari and Opera */
+   .mainContainer::-webkit-scrollbar {
+      display: none;
+   }
+
+   /* Hide scrollbar for IE, Edge and Firefox */
+   .mainContainer {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+   }
+   .rsComment {
+      padding-left: 20px;
+   }
+   .lsMainImageBox {
+      width: 100%;
+   }
+   .lsImageListItem {
+      height: 70px;
+      width: 70px;
+   }
+   .lsImageList {
+      height: 100px;
+   }
+}
+
+@supports not (aspect-ratio: 16 / 9) {
+   .lsMainImageBox {
+      width: 80vh;
+      height: 200px;
+   }
+   .lsImageListItem {
+      height: 72px !important;
+      width: 72px !important;
+   }
+}
+
+.loginContainer{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width:100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.loginBox{
+  width: 400px;
+  background-color: white;
+  padding:20px;
+  border-radius: 20px;
+}
+.loginHeader{
+  padding: 10px;
+  font-size: 16px;
+}
+.loginInput{
+  margin-right: 10px;
+  min-width: 200px;
+  font-size: 16px;
+  padding: 5px;
+  color: rgb(218, 100, 32)
+}
+.loginButton{
+  padding: 5px 25px;
+  font-size: 16px;
+  background-color: rgb(141, 219, 141);
+  border-radius: 2px;
+  
+}
