@@ -10,14 +10,16 @@ import style from './CreatePage.module.css';
 export default function CreatePage() {
    const [imageArray, setImageArray] = useState([]);
    const [isUpLoad, setIsUpLoad] = useState(false);
+   const [imageModalView, setImageModalView] = useState<{ isActive: boolean; image?: any; index?: number }>({ isActive: false, image: '' });
+
    const classElm = document.querySelector('[name="create-classInput"]') as HTMLInputElement;
    const commentElm = document.querySelector('[name="create-commentInput"]') as HTMLInputElement;
-   useEffect(()=>{
-      const idLogin = window.sessionStorage.getItem('idLogin')
-      if(idLogin !== 'thao'){
-         window.location.href = '/'
+   useEffect(() => {
+      const idLogin = window.sessionStorage.getItem('idLogin');
+      if (idLogin !== 'thao') {
+         window.location.href = '/';
       }
-   },[])
+   }, []);
    //TODO: handle upload button click
    const handleUploadButtonClick = () => {
       if (classElm.value != '' && imageArray.length > 0) {
@@ -26,6 +28,16 @@ export default function CreatePage() {
          alert('Chưa chọn Lớp hoặc không có hình ảnh !');
       }
    };
+   //TODO_END: handle upload button click
+
+   //TODO: handle delete image item
+   const handleDeleteImageItem = (index: any) => {
+      setImageModalView({ isActive: false });
+      const newArray = [...imageArray];
+      newArray.splice(index, 1);
+      setImageArray(newArray);
+   };
+   //TODO_END: handle delete image item
    return (
       <section className={style.mainContainer}>
          <header className={style.header}>
@@ -44,9 +56,22 @@ export default function CreatePage() {
          </header>
          <div className={style.contentContainer}>
             <LeftSide setImageArray={setImageArray} imageArray={imageArray} />
-            <RightSide imageArray={imageArray} setImageArray={setImageArray} />
+            <RightSide imageArray={imageArray} setImageArray={setImageArray} setImageModalView={setImageModalView} />
          </div>
          {isUpLoad && <ProgressUpload imageArray={imageArray} class={classElm.value} comment={commentElm.value} />}
+
+         {imageModalView.isActive && (
+            <div className={style.rsModalImageBox} onClick={() => setImageModalView({ isActive: false })}>
+               <div className={style.rsModalImageView} style={{ backgroundImage: `url(${URL.createObjectURL(imageModalView.image)})` }} onClick={(e) => e.stopPropagation()}>
+                  <div className={style.rsModalImageViewCloseMobile} onClick={() => setImageModalView({ isActive: false })}>
+                     đóng &times;
+                  </div>
+                  <div className={style.rsModalImageViewDeleteMobile} onClick={() => handleDeleteImageItem(imageModalView?.index)}>
+                     Xóa ảnh này
+                  </div>
+               </div>
+            </div>
+         )}
       </section>
    );
 }
@@ -92,7 +117,6 @@ function LeftSide(prop: any) {
 
 //JSX: right side
 function RightSide(prop: any) {
-   const [imageModalView, setImageModalView] = useState<{ isActive: boolean; image?: any }>({ isActive: false, image: '' });
    //TODO: handle delete image item
    const handleDeleteImageItem = (e: any, index: number) => {
       e.stopPropagation();
@@ -106,7 +130,7 @@ function RightSide(prop: any) {
          <section className={style.rightSideContainer}>
             {prop?.imageArray.map((crr: File, index: number) => {
                return (
-                  <div className={style.rsImageItem} key={index} style={{ backgroundImage: `url(${URL.createObjectURL(crr)})` }} onClick={() => setImageModalView({ isActive: true, image: crr })}>
+                  <div className={style.rsImageItem} key={index} style={{ backgroundImage: `url(${URL.createObjectURL(crr)})` }} onClick={() => prop.setImageModalView({ isActive: true, image: crr, index: index })}>
                      <span className={style.rsImageItemLabel}>{index}</span>
                      <span className={style.rsImageItemDeleteIcon} onClick={(e) => handleDeleteImageItem(e, index)}>
                         &times;
@@ -115,11 +139,6 @@ function RightSide(prop: any) {
                );
             })}
          </section>
-         {imageModalView.isActive && (
-            <div className={style.rsModalImageBox} onClick={()=> setImageModalView({isActive:false})}>
-               <div className={style.rsModalImageView} style={{ backgroundImage: `url(${URL.createObjectURL(imageModalView.image)})` }} />
-            </div>
-         )}
       </>
    );
 }
@@ -204,42 +223,39 @@ function ProgressUpload(prop: any) {
             break;
          }
          case 'image Upload': {
-            const finishArrayCheck = [];
+            const finishArrayCheck: any = [];
             imageBlobArray.forEach((crr, index) => {
                const file = crr.image;
                const fileName = `image-${crr.index}`;
-               const ref = `Image/${prop.class}/${state.key}`;
+               const ref = `Image/${prop.class}/${state.key}/`;
                const callback = (messenger: string, resultPostImage: any) => {
                   if (messenger === 'Upload completed successfully') {
-                     //TODO: get data from DB
-                     const refChild = `Main/${state.key}/images`;
-                     const callbackGetData = (resultGetData: any) => {
-                        let arrayImageTemp: any = [];
-                        if (resultGetData.payload[0] != '') {
-                           arrayImageTemp = resultGetData.payload;
-                        }
-                        const dataPost = [...arrayImageTemp, resultPostImage];
-                        const uploadContainer = [
-                           {
-                              ref: `Main/${state.key}/images`,
-                              data: dataPost,
-                           },
-                        ];
-                        const callbackPostDataToDB = () => {
-                           const arrayTemp = [...imageBlobArray];
-                           arrayTemp[index].status = 'done';
-                           setImageBlobArray(arrayTemp);
-                        };
-                        resultGetData.type === 'SUCCESSFUL' && postDataToDB(uploadContainer, callbackPostDataToDB);
-                     };
-                     getDataFromDB(refChild, callbackGetData);
-                     //TODO_END: get data from DB
+                     finishArrayCheck.push(resultPostImage);
+                     if (finishArrayCheck.length === imageBlobArray.length) {
+                        console.log('🚀 ~ file: CreatePage.tsx:235 ~ callback ~ imageBlobArray:', imageBlobArray);
+                        console.log('🚀 ~ file: CreatePage.tsx:235 ~ callback ~ finishArrayCheck:', finishArrayCheck);
+                        //TODO: get data from DB
+                        const refChild = `Main/${state.key}/images`;
+                        const callbackGetData = (resultGetData: any) => {
+                           let arrayImageTemp: any = [];
+                           if (resultGetData.payload[0] != '') {
+                              arrayImageTemp = resultGetData.payload;
+                           }
 
-                     finishArrayCheck.push(index);
-                     finishArrayCheck.length === imageBlobArray.length &&
-                        setState({
-                           message: 'done',
-                        });
+                           const uploadContainer = [
+                              {
+                                 ref: `Main/${state.key}/images`,
+                                 data: finishArrayCheck,
+                              },
+                           ];
+                           const callbackPostDataToDB = () => {
+                              setState({ message: 'done' });
+                           };
+                           resultGetData.type === 'SUCCESSFUL' && postDataToDB(uploadContainer, callbackPostDataToDB);
+                        };
+                        getDataFromDB(refChild, callbackGetData);
+                        //TODO_END: get data from DB
+                     }
                   } else if (messenger === 'Upload Failed') {
                      const arrayTemp = [...imageBlobArray];
                      arrayTemp[index].status = 'failed';
@@ -250,7 +266,11 @@ function ProgressUpload(prop: any) {
                   const arrayTemp = [...imageBlobArray];
                   arrayTemp[index].process.bytesTransferred = progressState.bytesTransferred;
                   arrayTemp[index].process.totalBytes = progressState.totalBytes;
-                  arrayTemp[index].status = 'uploading';
+                  if (progressState.totalBytes === progressState.totalBytes) {
+                     arrayTemp[index].status = 'done';
+                  } else {
+                     arrayTemp[index].status = 'uploading';
+                  }
                   setImageBlobArray(arrayTemp);
                };
                postDataToStorage(file, ref, fileName, callback, handleProgressUpload);

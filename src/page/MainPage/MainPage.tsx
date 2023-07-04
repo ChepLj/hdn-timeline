@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import getDataFromDB from '../../api/getDataFromDB';
 import banner from '../../media/image/banner.png';
 import style from './MainPage.module.css';
+import deleteDataFromStorage from '../../api/deleteFolderDataFromStorage';
+import deleteFolderDataFromStorage from '../../api/deleteFolderDataFromStorage';
+import postDataToDB from '../../api/postDataToDB';
 
 interface ITF_MainDataItem {
    key: string;
@@ -52,7 +55,11 @@ export default function MainPage() {
    return (
       <section className={style.mainContainer}>
          <div className={style.mainImage}>
-         {idLogin === 'admin' && <div className={style.mainButtonCreateNew} onClick={()=>window.location.href = '/create'}>create new +</div>}
+            {idLogin === 'admin' && (
+               <div className={style.mainButtonCreateNew} onClick={() => (window.location.href = '/create')}>
+                  create new +
+               </div>
+            )}
          </div>
          <div className={style.mainBanner}>
             <img className={style.mainBannerImage} src={banner} />
@@ -112,6 +119,31 @@ function LeftSide({ data, idLogin }: { data: ITF_MainDataItem; idLogin: string }
       }
    };
    //TODO_END: handle back forward Image
+   //TODO: handle delete all data
+   const handleDeleteAllData = (data:ITF_MainDataItem) => {
+      const callback = (messenger: string) => {
+         if(messenger === 'delete successfully'){
+            const uploadContainer = [{
+               ref:'Main/' + data.key,
+               data: null
+            }]
+            const callbackDeleteSuccess =(messenger:string)=> {
+               if( messenger === 'post successfully!'){
+                  alert('Xóa thành công !')
+                  window.location.href = '/'
+               }
+               else {
+                  alert('Xóa thất bại !')
+               }
+
+            }
+            postDataToDB(uploadContainer, callbackDeleteSuccess)
+         }
+      };
+      const ref = `Image/${data.class}/${data.key}`
+      deleteFolderDataFromStorage(ref, callback);
+   };
+   //TODO_END: handle delete all data
 
    return (
       <section className={style.leftSideContainer}>
@@ -121,7 +153,9 @@ function LeftSide({ data, idLogin }: { data: ITF_MainDataItem; idLogin: string }
             </div>
             {idLogin === 'admin' && (
                <div className={style.lsHeaderButton}>
-                  <span className={style.lsHeaderButtonDelete}>delete</span>
+                  <span className={style.lsHeaderButtonDelete} onClick={()=>handleDeleteAllData(data)}>
+                     delete
+                  </span>
                   <span className={style.lsHeaderButtonEdit}>edit</span>
                </div>
             )}
@@ -143,7 +177,7 @@ function LeftSide({ data, idLogin }: { data: ITF_MainDataItem; idLogin: string }
             </div>
          </div>
          <div className={style.lsImageList} id={`mainPage-imageList-${data.key}`}>
-            {arrayImage.map((crr, index) => {
+            {arrayImage?.map((crr, index) => {
                return (
                   <div
                      className={style.lsImageListItem}
